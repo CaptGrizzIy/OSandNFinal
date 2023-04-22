@@ -2,63 +2,29 @@
 <html>
 <head>
 	<title>Folder Contents</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			var url = "https://api.github.com/repos/CaptGrizzIy/repo/contents/foldername";
+			$.get(url, function(data){
+				$.each(data, function(index, item){
+					if(item.type == "file") {
+						var fileSize = (item.size / 1024).toFixed(2) + " KB";
+						var dateUpdated = new Date(item.updated_at).toLocaleString();
+						$("table").append("<tr><td>" + item.name + "</td><td>" + fileSize + "</td><td>" + dateUpdated + "</td></tr>");
+					}
+				});
+			});
+		});
+	</script>
 </head>
 <body>
-	<h1>Folder Contents</h1>
-
 	<table>
-		<thead>
-			<tr>
-				<th>File Name</th>
-				<th>File Size</th>
-				<th>Date Modified</th>
-			</tr>
-		</thead>
-		<tbody id="table-body">
-		</tbody>
+		<tr>
+			<th>File Name</th>
+			<th>File Size</th>
+			<th>Date Updated</th>
+		</tr>
 	</table>
-
-	<script>
-		// Use XMLHttpRequest to read folder contents
-		var xhr = new XMLHttpRequest();
-		xhr.open('GET', 'FileFolder', true);
-		xhr.onload = function () {
-			if (xhr.status === 200) {
-				var files = JSON.parse(xhr.responseText);
-
-				// Create a table row for each file in the folder
-				var tableBody = document.getElementById('table-body');
-				for (var i = 0; i < files.length; i++) {
-					var file = files[i];
-					var tr = document.createElement('tr');
-
-					// File name
-					var tdName = document.createElement('td');
-					var link = document.createElement('a');
-					link.setAttribute('href', 'FileFolder' + file.name);
-					link.textContent = file.name;
-					tdName.appendChild(link);
-					tr.appendChild(tdName);
-
-					// File size
-					var tdSize = document.createElement('td');
-					tdSize.textContent = file.size;
-					tr.appendChild(tdSize);
-
-					// Date modified
-					var tdDate = document.createElement('td');
-					tdDate.textContent = file.modified;
-					tr.appendChild(tdDate);
-
-					tableBody.appendChild(tr);
-				}
-			} else {
-				console.log('Failed to get folder contents');
-			}
-		};
-		xhr.send();
-	</script>
 </body>
 </html>
