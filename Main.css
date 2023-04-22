@@ -1,0 +1,15 @@
+
+
+
+header {
+  color:white;
+  background-color: red;
+  text-align: center;
+  font-style: italic;
+}
+
+body {
+  display: 100%;
+  grid-template: repeat(2, 50px) / repeat(3, 100px);
+  grid-gap: 50px;
+}
