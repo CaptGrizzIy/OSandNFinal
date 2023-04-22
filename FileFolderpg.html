@@ -30,7 +30,7 @@
         data.forEach(file => {
           const row = document.createElement("tr");
           const fileName = document.createElement("td");
-          fileName.textContent = file.name;
+          fileName.innerHTML = `<a href="${file.download_url}" download>${file.name}</a>`;
           const fileSize = document.createElement("td");
           fileSize.textContent = file.size;
           const dateUpdated = document.createElement("td");
