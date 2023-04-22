@@ -1,1 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Folder Contents</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<h1>Folder Contents</h1>
 
+	<table>
+		<thead>
+			<tr>
+				<th>File Name</th>
+				<th>File Size</th>
+				<th>Date Modified</th>
+			</tr>
+		</thead>
+		<tbody id="table-body">
+		</tbody>
+	</table>
+
+	<script>
+		// Use XMLHttpRequest to read folder contents
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', '/path/to/folder/', true);
+		xhr.onload = function () {
+			if (xhr.status === 200) {
+				var files = JSON.parse(xhr.responseText);
+
+				// Create a table row for each file in the folder
+				var tableBody = document.getElementById('table-body');
+				for (var i = 0; i < files.length; i++) {
+					var file = files[i];
+					var tr = document.createElement('tr');
+
+					// File name
+					var tdName = document.createElement('td');
+					var link = document.createElement('a');
+					link.setAttribute('href', '/path/to/folder/' + file.name);
+					link.textContent = file.name;
+					tdName.appendChild(link);
+					tr.appendChild(tdName);
+
+					// File size
+					var tdSize = document.createElement('td');
+					tdSize.textContent = file.size;
+					tr.appendChild(tdSize);
+
+					// Date modified
+					var tdDate = document.createElement('td');
+					tdDate.textContent = file.modified;
+					tr.appendChild(tdDate);
+
+					tableBody.appendChild(tr);
+				}
+			} else {
+				console.log('Failed to get folder contents');
+			}
+		};
+		xhr.send();
+	</script>
+</body>
+</html>
