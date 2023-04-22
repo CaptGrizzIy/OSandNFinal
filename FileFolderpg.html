@@ -23,7 +23,7 @@
 	<script>
 		// Use XMLHttpRequest to read folder contents
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', '/path/to/folder/', true);
+		xhr.open('GET', 'FileFolder', true);
 		xhr.onload = function () {
 			if (xhr.status === 200) {
 				var files = JSON.parse(xhr.responseText);
