@@ -1,30 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Folder Contents Updated</title>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script>
-		$(document).ready(function(){
-			var url = "https://api.github.com/repos/CaptGrizzIy/OSandNFinal/contents/FileFolder";
-			$.get(url, function(data){
-				$.each(data, function(index, item){
-					if(item.type == "file") {
-						var fileSize = (item.size / 1024).toFixed(2) + " KB";
-						var dateUpdated = new Date(item.updated_at).toLocaleString();
-						$("table").append("<tr><td>" + item.name + "</td><td>" + fileSize + "</td><td>" + dateUpdated + "</td></tr>");
-					}
-				});
-			});
-		});
-	</script>
+  <title>Folder Contents</title>
 </head>
 <body>
-	<table>
-		<tr>
-			<th>File Name</th>
-			<th>File Size</th>
-			<th>Date Updated</th>
-		</tr>
-	</table>
+  <table>
+    <thead>
+      <tr>
+        <th>File Name</th>
+        <th>File Size</th>
+        <th>Date Updated</th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+    </tbody>
+  </table>
+
+  <script>
+    const apiUrl = "https://api.github.com/repos/CaptGrizzIy/OSandNFinal/contents/FileFolder";
+    const owner = "CaptGrizzIy";
+    const repo = "OSandNFinal";
+    const path = "FileFolder";
+
+    fetch(apiUrl.replace("{owner}", owner).replace("{repo}", repo).replace("{path}", path))
+      .then(response => response.json())
+      .then(data => {
+        const tableBody = document.getElementById("table-body");
+        data.forEach(file => {
+          const row = document.createElement("tr");
+          const fileName = document.createElement("td");
+          fileName.textContent = file.name;
+          const fileSize = document.createElement("td");
+          fileSize.textContent = file.size;
+          const dateUpdated = document.createElement("td");
+          dateUpdated.textContent = file.updated_at;
+          row.appendChild(fileName);
+          row.appendChild(fileSize);
+          row.appendChild(dateUpdated);
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(error => console.error(error));
+  </script>
 </body>
 </html>
