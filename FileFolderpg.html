@@ -5,7 +5,7 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 		$(document).ready(function(){
-			var url = "https://api.github.com/repos/CaptGrizzIy/repo/contents/foldername";
+			var url = "https://api.github.com/repos/CaptGrizzIy/OSandNFinal/contents/FileFolder";
 			$.get(url, function(data){
 				$.each(data, function(index, item){
 					if(item.type == "file") {
